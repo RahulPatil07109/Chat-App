@@ -34,9 +34,7 @@ io.on("connection", (socket) => {
     }
 
     socket.join(user.room); // this let's us join the given room
-    // given below are some variations to emit within the room
-    // io.to.emit , socket.broadcast.to.emit
-    // send/emit a welcome message to the client
+
     socket.emit("message", generateMessage("Admin", "Welcome !"));
     // broadcast this message to all the clients but the new client
     socket.broadcast
@@ -54,7 +52,6 @@ io.on("connection", (socket) => {
 
   // recieves an event "sendMessage" from the client
   socket.on("sendMessage", (message) => {
-    // io.emit is used to send message to all the clients from server
     const user = getUser(socket.id);
     io.to(user.room).emit("message", generateMessage(user.username, message));
   });
